@@ -8,6 +8,8 @@
     "install": "cd server && npm i && cd ../client && npm i",
     "server": "cd server && npm start",
     "client": "cd client && npm run dev",
+    "server:build": "cd server && npm run build",
+    "seed": "cd server && npm run seed",
     "build": "concurrently \"cd server && npm run build\" \"cd client && npm run build\""
   },
   "keywords": [],
