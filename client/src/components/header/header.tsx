@@ -26,6 +26,9 @@ const loginHeader = () => {
                 <LinkContainer to="/login">
                   <Nav.Link>Login</Nav.Link>
                 </LinkContainer>
+                <LinkContainer to="/">
+                  <Nav.Link>products</Nav.Link>
+                </LinkContainer>
               </Nav>
             </Navbar.Collapse>
           </Container>

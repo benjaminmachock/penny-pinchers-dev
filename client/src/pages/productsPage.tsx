@@ -1,51 +1,99 @@
-import { useState, useEffect } from "react";
-// import { retrieveProducts, filteredByCategory } from "../api/productsAPI";
-import type { Product } from "..//interfaces/products";
-import Products from "../components/product/productList";
-import { Container, Form } from "react-bootstrap";
+import { useState } from "react";
+import { Container } from "react-bootstrap";
+import type { Product } from "../interfaces/products";
+import ProductList from "../components/product/productList";
 
-const ProductPage: React.FC = () => {
-  const [allProducts, setAllProducts] = useState<Product[]>([]); // Previously: products
-  const [filteredProducts, setFilteredProducts] = useState<Product[]>([]); // Previously: filteredData
-  const [isCategorySelected, setIsCategorySelected] = useState(false); // Previously: userSelected
+const mockProducts: Product[] = [
+  {
+    id: 1,
+    title: "Smoked Salmon",
+    description: "Premium smoked salmon, perfect for special occasions.",
+    category: "smoked",
+    image: "/images/smoked-salmon.jpg",
+    price: 25.99,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 2,
+    title: "Fresh Tuna",
+    description: "Freshly caught tuna, ideal for sashimi or grilling.",
+    category: "fresh",
+    image: "/images/fresh-tuna.jpg",
+    price: 15.99,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 3,
+    title: "Smoked Gouda",
+    description: "Rich and creamy smoked Gouda cheese.",
+    category: "smoked",
+    image: "/images/smoked-gouda.jpg",
+    price: 12.99,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 4,
+    title: "Fresh Apples",
+    description: "Crisp and juicy apples, straight from the orchard.",
+    category: "fresh",
+    image: "/images/fresh-apples.jpg",
+    price: 3.99,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 5,
+    title: "Smoked Almonds",
+    description: "Savory smoked almonds, a perfect snack.",
+    category: "smoked",
+    image: "/images/smoked-almonds.jpg",
+    price: 8.99,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 6,
+    title: "Fresh Bread",
+    description: "Warm and crusty bread, baked daily.",
+    category: "fresh",
+    image: "/images/fresh-bread.jpg",
+    price: 4.99,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 7,
+    title: "Smoked Bacon",
+    description: "Thick-cut smoked bacon, perfect for breakfast.",
+    category: "smoked",
+    image: "/images/smoked-bacon.jpg",
+    price: 9.99,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+  {
+    id: 8,
+    title: "Fresh Eggs",
+    description: "Farm-fresh eggs, great for baking or breakfast.",
+    category: "fresh",
+    image: "/images/fresh-eggs.jpg",
+    price: 2.99,
+    createdAt: new Date(),
+    updatedAt: new Date(),
+  },
+];
 
-  const handleCategoryChange = async (
-    e: React.ChangeEvent<HTMLSelectElement>
-  ) => {
-    const selectedCategory = e.target.value; // Previously: value
-    const productsByCategory = await filteredByCategory(selectedCategory); // Previously: data
-    setFilteredProducts(productsByCategory);
-    setIsCategorySelected(true); // Switch to filtered view
-  };
-
-  useEffect(() => {
-    loadAllProducts(); // Previously: fetchProducts
-  }, []);
-
-  const loadAllProducts = async () => {
-    const productsFromAPI = await retrieveProducts(); // Previously: userProducts
-    setAllProducts(productsFromAPI);
-  };
+const ProductsPage: React.FC = () => {
+  const [allProducts] = useState<Product[]>(mockProducts);
 
   return (
     <Container className="py-5">
-      <h1 className="text-center mb-4">Our Products</h1>
-      <Form.Group controlId="categorySelect" className="mb-4">
-        <Form.Label>Filter by Category:</Form.Label>
-        <Form.Select onChange={handleCategoryChange}>
-          <option value="">All Products</option>
-          <option value="smoked">Smoked</option>
-          <option value="fresh">Fresh</option>
-        </Form.Select>
-      </Form.Group>
-      <Products
-        allProducts={allProducts} // Updated prop name
-        filteredProducts={filteredProducts} // Updated prop name
-        isCategorySelected={isCategorySelected} // Updated prop name
-        setIsCategorySelected={setIsCategorySelected} // Updated prop name
-      />
+      <ProductList allProducts={allProducts} />
     </Container>
   );
 };
 
-export default ProductPage;
+export default ProductsPage;
