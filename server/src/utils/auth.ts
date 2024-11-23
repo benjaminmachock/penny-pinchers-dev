@@ -3,7 +3,7 @@ import { GraphQLError } from "graphql";
 import dotenv from "dotenv";
 dotenv.config();
 
-const authenticateToken = ({ req }: any) => {
+export const authenticateToken = ({ req }: any) => {
   let token = req.body.token || req.query.token || req.headers.authorization;
 
   if (req.headers.authorization) {
@@ -26,18 +26,16 @@ const authenticateToken = ({ req }: any) => {
   return req;
 };
 
-const signToken = (username: string, email: string, _id: unknown) => {
+export const signToken = (username: string, email: string, _id: unknown) => {
   const payload = { username, email, _id };
   const secretKey: any = process.env.JWT_SECRET_KEY;
 
   return jwt.sign({ data: payload }, secretKey, { expiresIn: "2h" });
 };
 
-class AuthenticationError extends GraphQLError {
+export class AuthenticationError extends GraphQLError {
   constructor(message: string) {
     super(message, undefined, undefined, undefined, ["UNAUTHENTICATED"]);
     Object.defineProperty(this, "name", { value: "AuthenticationError" });
   }
 }
-
-export { authenticateToken, signToken, AuthenticationError };

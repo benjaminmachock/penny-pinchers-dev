@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
 
-const QUERY_CUSTOMERS = gql`
+export const QUERY_CUSTOMERS = gql`
   query allCustomers {
     customers {
       _id
@@ -9,7 +9,7 @@ const QUERY_CUSTOMERS = gql`
   }
 `;
 
-const QUERY_SINGLE_CUSTOMER = gql`
+export const QUERY_SINGLE_CUSTOMER = gql`
   query singleCustomer($customerId: ID!) {
     customer(customerId: $customerId) {
       _id
@@ -18,7 +18,7 @@ const QUERY_SINGLE_CUSTOMER = gql`
   }
 `;
 
-const QUERY_ME = gql`
+export const QUERY_ME = gql`
   query me {
     me {
       _id
@@ -26,5 +26,3 @@ const QUERY_ME = gql`
     }
   }
 `;
-
-export { QUERY_CUSTOMERS, QUERY_SINGLE_CUSTOMER, QUERY_ME };

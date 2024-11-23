@@ -30,5 +30,4 @@ login(email: String!, password: String!): Auth
 removeCustomer: Customer
  }
 `;
-
 export default typeDefs;
