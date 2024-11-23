@@ -1,5 +1,5 @@
-import { Customer } from "../models/index.js";
-import { signToken, AuthenticationError } from "../utils/auth.js";
+import { Customer, Product } from "../models/index.js";
+import { signToken, AuthenticationError, ProductError } from "../utils/auth.js";
 const resolvers = {
     Query: {
         customers: async () => {
@@ -13,6 +13,12 @@ const resolvers = {
                 return await Customer.findOne({ _id: context.user._id });
             }
             throw new AuthenticationError("Not Authenticated");
+        },
+        products: async () => {
+            return await Product.find();
+        },
+        product: async (_parent, { productId }) => {
+            return await Product.findOne({ _id: productId });
         },
     },
     Mutation: {
@@ -38,6 +44,16 @@ const resolvers = {
                 return await Customer.findOneAndDelete({ _id: context.user._id });
             }
             throw new AuthenticationError("Could not find user");
+        },
+        addProduct: async (_parent, { input }) => {
+            const product = await Product.create({ ...input });
+            return { product };
+        },
+        removeProduct: async (_parent, _args, context) => {
+            if (context.product) {
+                return await Product.findOneAndDelete({ _id: context.product._id });
+            }
+            throw new ProductError("Could not find product");
         },
     },
 };

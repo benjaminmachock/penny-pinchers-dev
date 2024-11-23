@@ -3,7 +3,7 @@ const orderSchema = new Schema({
     customerID: {
         type: String,
     },
-    productsID: {
+    productID: {
         type: String,
     },
     shipped: {
