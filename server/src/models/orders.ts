@@ -3,7 +3,7 @@ import { Schema, model, Document } from "mongoose";
 interface iOrder extends Document {
   _id: string;
   customerID: string;
-  productsID: string;
+  productID: string;
   shipped: boolean;
 }
 
@@ -12,7 +12,7 @@ const orderSchema = new Schema<iOrder>(
     customerID: {
       type: String,
     },
-    productsID: {
+    productID: {
       type: String,
     },
     shipped: {

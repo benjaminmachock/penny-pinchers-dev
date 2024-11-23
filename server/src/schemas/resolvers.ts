@@ -1,5 +1,5 @@
-import { Customer } from "../models/index.js";
-import { signToken, AuthenticationError } from "../utils/auth.js";
+import { Customer, Product } from "../models/index.js";
+import { signToken, AuthenticationError, ProductError } from "../utils/auth.js";
 
 interface Customer {
   _id: string;
@@ -22,6 +22,30 @@ interface AddCustomerArgs {
 
 interface Context {
   user?: Customer;
+  product?: Product;
+}
+
+interface Product {
+  _id: string;
+  title: string;
+  price: string;
+  description: string;
+  category: string;
+  image: string;
+}
+
+interface ProductArgs {
+  productId: string;
+}
+
+interface AddProductArgs {
+  input: {
+    title: string;
+    price: string;
+    description: string;
+    category: string;
+    image: string;
+  };
 }
 
 const resolvers = {
@@ -47,6 +71,17 @@ const resolvers = {
       }
 
       throw new AuthenticationError("Not Authenticated");
+    },
+
+    products: async (): Promise<Product[]> => {
+      return await Product.find();
+    },
+
+    product: async (
+      _parent: unknown,
+      { productId }: ProductArgs
+    ): Promise<Product | null> => {
+      return await Product.findOne({ _id: productId });
     },
   },
 
@@ -92,6 +127,27 @@ const resolvers = {
       }
 
       throw new AuthenticationError("Could not find user");
+    },
+
+    addProduct: async (
+      _parent: unknown,
+      { input }: AddProductArgs
+    ): Promise<{ product: Product }> => {
+      const product = await Product.create({ ...input });
+
+      return { product };
+    },
+
+    removeProduct: async (
+      _parent: unknown,
+      _args: unknown,
+      context: Context
+    ): Promise<Product | null> => {
+      if (context.product) {
+        return await Product.findOneAndDelete({ _id: context.product._id });
+      }
+
+      throw new ProductError("Could not find product");
     },
   },
 };
