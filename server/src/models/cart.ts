@@ -23,8 +23,7 @@ const cartItemSchema = new Schema<CartItem>({
       required: true,
     },
   ],
-  quantity: { type: Number, required: true, default: 1 },
-  price: { type: Number, required: true },
+  quantity: { type: Number, required: true, min: 1 },
 });
 
 const cartSchema = new Schema<Cart>(
@@ -35,16 +34,6 @@ const cartSchema = new Schema<Cart>(
       required: true,
     },
     items: [cartItemSchema],
-    totalPrice: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    stripeSessionId: { type: String },
-    paymentStatus: {
-      type: String,
-      values: ["processed", "failed"],
-    },
   },
   {
     toJSON: { getters: true },
