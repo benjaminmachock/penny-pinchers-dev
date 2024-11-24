@@ -44,56 +44,17 @@ const mockProducts: Product[] = [
     createdAt: new Date(),
     updatedAt: new Date(),
   },
-  {
-    id: 5,
-    title: "Smoked Almonds",
-    description: "Savory smoked almonds, a perfect snack.",
-    category: "smoked",
-    image: "/images/smoked-almonds.jpg",
-    price: 8.99,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 6,
-    title: "Fresh Bread",
-    description: "Warm and crusty bread, baked daily.",
-    category: "fresh",
-    image: "/images/fresh-bread.jpg",
-    price: 4.99,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 7,
-    title: "Smoked Bacon",
-    description: "Thick-cut smoked bacon, perfect for breakfast.",
-    category: "smoked",
-    image: "/images/smoked-bacon.jpg",
-    price: 9.99,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 8,
-    title: "Fresh Eggs",
-    description: "Farm-fresh eggs, great for baking or breakfast.",
-    category: "fresh",
-    image: "/images/fresh-eggs.jpg",
-    price: 2.99,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
 ];
 
-const ProductsPage: React.FC = () => {
+const Products: React.FC = () => {
   const [allProducts] = useState<Product[]>(mockProducts);
 
   return (
     <Container className="py-5">
+      <h1 className="text-center mb-6">Our Products</h1>
       <ProductList allProducts={allProducts} />
     </Container>
   );
 };
 
-export default ProductsPage;
+export default Products;

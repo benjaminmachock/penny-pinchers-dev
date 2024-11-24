@@ -1,6 +1,8 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Card, Button, Container, Row, Col } from "react-bootstrap";
 import type { Product } from "../../interfaces/products";
+import { useQuery } from "@apollo/client";
+import { QUERY_PRODUCTS } from "../../utils/queries";
 
 interface ProductListProps {
   allProducts: Product[];
@@ -37,7 +39,6 @@ const ProductList: React.FC<ProductListProps> = ({ allProducts }) => {
 
   return (
     <Container className="my-5">
-      <h1 className="text-center mb-4">Our Products</h1>
       <div className="text-center mb-4">
         <Button
           variant="secondary"
@@ -88,10 +89,6 @@ const ProductList: React.FC<ProductListProps> = ({ allProducts }) => {
                   {product.description && product.description.length > 60
                     ? `${product.description.substring(0, 60)}...`
                     : product.description || ""}
-                </Card.Text>
-                <Card.Text>
-                  <strong>Price:</strong> $
-                  {product.price ? product.price.toFixed(2) : "N/A"}
                 </Card.Text>
                 <Card.Text>
                   <strong>Category:</strong> {product.category || "N/A"}

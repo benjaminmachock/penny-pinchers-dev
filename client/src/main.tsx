@@ -1,11 +1,10 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import App from "./App.tsx";
 import LoginPage from "./pages/loginPage.tsx";
-import "bootstrap/dist/css/bootstrap.min.css";
 import ProductPage from "./pages/productPage";
 import ProductsPage from "./pages/productsPage";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 const router = createBrowserRouter([
   {
@@ -14,7 +13,6 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        // path: "/products",
         element: <ProductsPage />,
       },
       {
@@ -33,12 +31,7 @@ const router = createBrowserRouter([
   },
 ]);
 
-const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
-);
-
-root.render(
-  <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>
-);
+const rootElement = document.getElementById("root");
+if (rootElement) {
+  ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
+}
