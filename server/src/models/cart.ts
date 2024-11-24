@@ -4,15 +4,11 @@ interface Cart extends Document {
   _id: string;
   customer: Types.ObjectId;
   items: CartItem[];
-  totalPrice: number;
-  paymentStatus: "processed" | "failed";
-  stripeSessionId?: string;
 }
 interface CartItem extends Document {
   _id: string;
   product: Types.ObjectId;
   quantity: number;
-  price: number;
 }
 
 const cartItemSchema = new Schema<CartItem>({
