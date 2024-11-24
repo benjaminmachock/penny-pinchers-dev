@@ -1,4 +1,5 @@
 import { Schema, model } from "mongoose";
+import { reviewSchema } from "./Review.js";
 const productSchema = new Schema({
     title: {
         type: String,
@@ -14,6 +15,10 @@ const productSchema = new Schema({
     },
     image: {
         type: String,
+    },
+    reviews: [reviewSchema],
+    rating: {
+        type: Number,
     },
 }, {
     toJSON: { getters: true },

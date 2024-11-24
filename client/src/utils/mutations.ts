@@ -8,6 +8,7 @@ export const ADD_CUSTOMER = gql`
         _id
         username
         email
+        password
       }
     }
   }
@@ -19,8 +20,8 @@ export const LOGIN_CUSTOMER = gql`
       token
       customer {
         _id
-        username
         email
+        password
       }
     }
   }

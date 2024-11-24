@@ -13,6 +13,8 @@ price:String
 description: String
 category: String
 image: String
+reviews: [String]
+rating: Int
 }
 
 type Auth {

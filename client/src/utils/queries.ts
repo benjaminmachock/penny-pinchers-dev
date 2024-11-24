@@ -38,6 +38,7 @@ export const QUERY_PRODUCTS = gql`
       description
       category
       image
+      review
     }
   }
 `;
@@ -50,6 +51,8 @@ export const QUERY_SINGLE_PRODUCT = gql`
       description
       category
       image
+      review
+      rating
     }
   }
 `;
