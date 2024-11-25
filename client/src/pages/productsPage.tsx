@@ -1,60 +1,50 @@
-import { useState } from "react";
-import { Container } from "react-bootstrap";
-import type { Product } from "../interfaces/products";
+import React, { useState } from "react";
+import { useQuery } from "@apollo/client";
+import { QUERY_PRODUCTS } from "../utils/queries";
+import CategorySelector from "..//components/product/categorySelector";
 import ProductList from "../components/product/productList";
+import { Container, Spinner, Alert } from "react-bootstrap";
 
-const mockProducts: Product[] = [
-  {
-    id: 1,
-    title: "Smoked Salmon",
-    description: "Premium smoked salmon, perfect for special occasions.",
-    category: "smoked",
-    image: "/images/smoked-salmon.jpg",
-    price: 25.99,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 2,
-    title: "Fresh Tuna",
-    description: "Freshly caught tuna, ideal for sashimi or grilling.",
-    category: "fresh",
-    image: "/images/fresh-tuna.jpg",
-    price: 15.99,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 3,
-    title: "Smoked Gouda",
-    description: "Rich and creamy smoked Gouda cheese.",
-    category: "smoked",
-    image: "/images/smoked-gouda.jpg",
-    price: 12.99,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-  {
-    id: 4,
-    title: "Fresh Apples",
-    description: "Crisp and juicy apples, straight from the orchard.",
-    category: "fresh",
-    image: "/images/fresh-apples.jpg",
-    price: 3.99,
-    createdAt: new Date(),
-    updatedAt: new Date(),
-  },
-];
+const ProductsPage: React.FC = () => {
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const { loading, error, data } = useQuery(QUERY_PRODUCTS);
 
-const Products: React.FC = () => {
-  const [allProducts] = useState<Product[]>(mockProducts);
+  if (loading) {
+    return (
+      <Container className="text-center py-5">
+        <Spinner animation="border" />
+      </Container>
+    );
+  }
+
+  if (error) {
+    return (
+      <Container className="text-center py-5">
+        <Alert variant="danger">Failed to load products: {error.message}</Alert>
+      </Container>
+    );
+  }
+
+  const allProducts = data?.products || [];
+  const filteredProducts =
+    selectedCategory && selectedCategory !== "all"
+      ? allProducts.filter(
+          (product: any) => product.category === selectedCategory
+        )
+      : allProducts;
 
   return (
     <Container className="py-5">
-      <h1 className="text-center mb-6">Our Products</h1>
-      <ProductList allProducts={allProducts} />
+      {!selectedCategory ? (
+        <CategorySelector setSelectedCategory={setSelectedCategory} />
+      ) : (
+        <ProductList
+          allProducts={filteredProducts}
+          setSelectedCategory={setSelectedCategory}
+        />
+      )}
     </Container>
   );
 };
 
-export default Products;
+export default ProductsPage;

@@ -1,6 +1,5 @@
 import React from "react";
 import { Card, Button } from "react-bootstrap";
-// import { Link } from "react-router-dom";
 import type { Product } from "../../interfaces/products";
 
 interface ProductProps {
@@ -64,7 +63,6 @@ const Product: React.FC<ProductProps> = ({ product }) => {
 
   return (
     <div style={styles.cardContainer}>
-      {/* <Link to={`/product/${product.id}`}> */}
       <Card style={styles.card as React.CSSProperties}>
         <Card.Img
           variant="top"
@@ -94,7 +92,6 @@ const Product: React.FC<ProductProps> = ({ product }) => {
           <Button style={styles.button}>Add to Cart</Button>
         </Card.Body>
       </Card>
-      {/* </Link> */}
     </div>
   );
 };
