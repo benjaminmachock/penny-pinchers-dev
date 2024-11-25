@@ -65,3 +65,25 @@ export const REMOVE_PRODUCT = gql`
     }
   }
 `;
+
+export const ADD_REVIEW = gql`
+  mutation addReview($input: ReviewInput!) {
+    addReview(input: $input) {
+      review {
+        _id
+        reviewText
+        rating
+      }
+    }
+  }
+`;
+
+export const REMOVE_REVIEW = gql`
+  mutation removeReview($input: Review!) {
+    removeReview(review: $review) {
+      _id
+      reviewText
+      rating
+    }
+  }
+`;

@@ -1,6 +1,4 @@
 import { Schema, model, Document } from "mongoose";
-import { reviewSchema } from "./Review.js";
-import type { iReview } from "./Review.js";
 
 interface iProduct extends Document {
   _id: string;
@@ -9,8 +7,6 @@ interface iProduct extends Document {
   description: string;
   category: string;
   image: string;
-  reviews: iReview[];
-  rating: number;
 }
 
 const productSchema = new Schema<iProduct>(
@@ -29,10 +25,6 @@ const productSchema = new Schema<iProduct>(
     },
     image: {
       type: String,
-    },
-    reviews: [reviewSchema],
-    rating: {
-      type: Number,
     },
   },
   {

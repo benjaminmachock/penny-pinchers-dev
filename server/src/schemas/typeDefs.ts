@@ -9,11 +9,15 @@ password: String
 type Product {
 _id: ID
 title: String
-price:String
+price: String
 description: String
 category: String
 image: String
-reviews: [String]
+}
+
+type Review {
+_id: ID
+reviewText: String
 rating: Int
 }
 
@@ -42,15 +46,19 @@ customer(customerID: ID!): Customer
 me: Customer
 products: [Product]!
 product(productID: ID!): Product
+reviews: [Review]!
+review(reviewID: ID!): Review
  }
 
 type Mutation {
 addCustomer(input: CustomerInput!): Auth
 login(email: String!, password: String!): Auth
 addProduct(input: ProductInput!): Product
+addReview(input: ReviewInput!): Review
 
 removeCustomer: Customer
 removeProduct: Product
+removeReview: Review
  }
 `;
 

@@ -1,5 +1,11 @@
-import { Customer, Product } from "../models/index.js";
-import { signToken, AuthenticationError, ProductError } from "../utils/auth.js";
+import { Customer, Product, Review } from "../models/index.js";
+
+import {
+  signToken,
+  AuthenticationError,
+  ProductError,
+  ReviewError,
+} from "../utils/auth.js";
 
 interface Customer {
   _id: string;
@@ -23,6 +29,7 @@ interface AddCustomerArgs {
 interface Context {
   user?: Customer;
   product?: Product;
+  review?: Review;
 }
 
 interface Product {
@@ -45,6 +52,23 @@ interface AddProductArgs {
     description: string;
     category: string;
     image: string;
+  };
+}
+
+interface Review {
+  _id: string;
+  reviewText: string;
+  rating: number;
+}
+
+interface ReviewArgs {
+  reviewId: string;
+}
+
+interface AddReviewArgs {
+  input: {
+    reviewText: string;
+    rating: number;
   };
 }
 
@@ -82,6 +106,17 @@ const resolvers = {
       { productId }: ProductArgs
     ): Promise<Product | null> => {
       return await Product.findOne({ _id: productId });
+    },
+
+    reviews: async (): Promise<Review[]> => {
+      return await Review.find();
+    },
+
+    review: async (
+      _parent: unknown,
+      { reviewId }: ReviewArgs
+    ): Promise<Review | null> => {
+      return await Review.findOne({ _id: reviewId });
     },
   },
 
@@ -148,6 +183,26 @@ const resolvers = {
       }
 
       throw new ProductError("Could not find product");
+    },
+
+    addReview: async (
+      _parent: unknown,
+      { input }: AddReviewArgs
+    ): Promise<{ review: Review }> => {
+      const review = await Review.create({ ...input });
+
+      return { review };
+    },
+
+    removeReview: async (
+      _parent: unknown,
+      _args: unknown,
+      context: Context
+    ): Promise<Review | null> => {
+      if (context.review) {
+        return await Review.findOneAndDelete({ _id: context.review._id });
+      }
+      throw new ReviewError("Could not find review");
     },
   },
 };

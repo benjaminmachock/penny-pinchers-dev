@@ -1,7 +1,8 @@
 import db from "../config/connection.js";
-import { Customer, Product } from "../models/index.js";
+import { Customer, Product, Review } from "../models/index.js";
 import customerSeeds from "./customerData.json" with { type: "json" };
 import productSeeds from "./productData.json" with { type: "json" };
+import reviewSeeds from './reviewData.json' with { type: 'json'};
 import cleanDB from "./cleanDB.js";
 
 const seedDatabase = async (): Promise<void> => {
@@ -14,6 +15,9 @@ const seedDatabase = async (): Promise<void> => {
 
     await Product.insertMany(productSeeds);
     console.log("Product seeding completed successfully!");
+
+    await Review.insertMany(reviewSeeds);
+    console.log("Review seeding completed successfully!")
 
     process.exit(0);
   } catch (err: unknown) {
