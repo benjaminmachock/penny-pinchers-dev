@@ -13,19 +13,7 @@ const resolvers = {
             const populatedCart = await cart?.populate({
                 path: "items.product",
             });
-            console.log(populatedCart?.items);
             return populatedCart;
-            // populatedCart?.items.forEach((item, index) => {
-            //   console.log(`Item ${index} product:`, item.product);
-            // });
-            // const normalizedItems = populatedCart?.items.map((item) => ({
-            //   ...item.toObject(), // Convert to plain JS object
-            //   product: Array.isArray(item.product)
-            //     ? item.product.map((p) => p.toObject()) // Handle array of populated objects
-            //     : item.product.toObject(), // Handle single populated object
-            // }));
-            // console.log("normalizedItems:", normalizedItems);
-            // return { ...populatedCart?.toObject(), items: normalizedItems };
         },
         me: async (_parent, _args, context) => {
             if (context.user) {
@@ -40,18 +28,18 @@ const resolvers = {
             const token = signToken(customer.username, customer.email, customer._id);
             return { customer, token };
         },
-        addToCart: async (_parent, { productId, userId, quantity, }) => {
+        addToCart: async (_parent, { productId, customerId, quantity, }) => {
             //find customer and push products to cart
-            const customer = await Customer.findById(userId);
+            const customer = await Customer.findById(customerId);
             const product = await Product.findById(productId);
             if (!customer)
                 throw new AuthenticationError("No User Found");
             if (!product)
                 throw new AuthenticationError("No Product Found");
             //find users cart
-            let cart = await Cart.findOne({ user: userId });
+            let cart = await Cart.findOne({ user: customerId });
             if (!cart) {
-                cart = new Cart({ customer: userId, items: [] });
+                cart = new Cart({ customer: customerId, items: [] });
             }
             const cartItem = cart.items.find((item) => item.product.equals(productId));
             if (cartItem) {
@@ -62,6 +50,34 @@ const resolvers = {
             }
             await cart.save();
             const populatedCart = await cart.populate({ path: "items.product" });
+            return populatedCart;
+        },
+        removeFromCart: async (_parent, { userId, productId, quantity, }) => {
+            const customer = await Customer.findById(userId);
+            if (!customer)
+                throw new AuthenticationError("No User Found");
+            const product = await Product.findById(productId);
+            if (!product)
+                throw new AuthenticationError("No Product Found");
+            let cart = await Cart.findOne({ customer: userId });
+            if (!cart) {
+                throw new AuthenticationError("No Cart Found");
+            }
+            const cartItem = cart.items.find((item) => item.product.equals(productId));
+            if (!cartItem) {
+                throw new Error("Product not found in cart");
+            }
+            if (cartItem.quantity <= quantity) {
+                cart.items = cart.items.filter((item) => !item.product.equals(productId));
+            }
+            else {
+                cartItem.quantity -= quantity;
+            }
+            const updatedCart = await cart.save();
+            console.log(updatedCart.items);
+            const populatedCart = await updatedCart.populate({
+                path: "items.product",
+            });
             return populatedCart;
         },
         login: async (_parent, { email, password }) => {

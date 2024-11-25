@@ -76,22 +76,22 @@ const resolvers = {
       _parent: unknown,
       {
         productId,
-        userId,
+        customerId,
         quantity,
-      }: { userId: string; productId: string; quantity: number }
+      }: { customerId: string; productId: string; quantity: number }
     ) => {
       //find customer and push products to cart
-      const customer = await Customer.findById(userId);
+      const customer = await Customer.findById(customerId);
       const product = await Product.findById(productId);
 
       if (!customer) throw new AuthenticationError("No User Found");
       if (!product) throw new AuthenticationError("No Product Found");
 
       //find users cart
-      let cart = await Cart.findOne({ user: userId });
+      let cart = await Cart.findOne({ user: customerId });
 
       if (!cart) {
-        cart = new Cart({ customer: userId, items: [] });
+        cart = new Cart({ customer: customerId, items: [] });
       }
 
       const cartItem = cart.items.find((item) =>
@@ -146,9 +146,10 @@ const resolvers = {
         cartItem.quantity -= quantity;
       }
 
-      await cart.save();
+      const updatedCart = await cart.save();
+      console.log(updatedCart.items);
 
-      const populatedCart = await cart.populate({
+      const populatedCart = await updatedCart.populate({
         path: "items.product",
       });
 

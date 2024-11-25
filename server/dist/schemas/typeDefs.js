@@ -45,8 +45,8 @@ me: Customer
 type Mutation {
 addCustomer(input: CustomerInput!): Auth
 login(email: String!, password: String!): Auth
-addToCart(productId: ID!, userId: ID!, quantity: Int!):Cart
-removeFromCart(productId: ID!, userId: ID!):Cart
+addToCart(productId: ID!, customerId: ID!, quantity: Int!):Cart
+removeFromCart(productId: ID!, customerId: ID!, quantity: Int!):Cart
 removeCustomer: Customer
  }
 `;
