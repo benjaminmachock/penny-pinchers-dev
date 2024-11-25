@@ -37,6 +37,16 @@ const resolvers = {
       return await Customer.findOne({ _id: customerId });
     },
 
+    viewCart: async (_parent: unknown, { cartId }: { cartId: string }) => {
+      const cart = await Cart.findById(cartId);
+
+      const populatedCart = await cart?.populate({
+        path: "items.product",
+      });
+
+      return populatedCart;
+    },
+
     me: async (
       _parent: unknown,
       _args: unknown,
@@ -96,7 +106,53 @@ const resolvers = {
 
       await cart.save();
 
-      return cart.populate("items.product");
+      const populatedCart = await cart.populate({ path: "items.product" });
+
+      return populatedCart;
+    },
+
+    removeFromCart: async (
+      _parent: unknown,
+      {
+        userId,
+        productId,
+        quantity,
+      }: { userId: string; productId: string; quantity: number }
+    ) => {
+      const customer = await Customer.findById(userId);
+      if (!customer) throw new AuthenticationError("No User Found");
+
+      const product = await Product.findById(productId);
+      if (!product) throw new AuthenticationError("No Product Found");
+
+      let cart = await Cart.findOne({ customer: userId });
+      if (!cart) {
+        throw new AuthenticationError("No Cart Found");
+      }
+
+      const cartItem = cart.items.find((item) =>
+        item.product.equals(productId)
+      );
+
+      if (!cartItem) {
+        throw new Error("Product not found in cart");
+      }
+
+      if (cartItem.quantity <= quantity) {
+        cart.items = cart.items.filter(
+          (item) => !item.product.equals(productId)
+        );
+      } else {
+        cartItem.quantity -= quantity;
+      }
+
+      await cart.save();
+
+      const populatedCart = await cart.populate({
+        path: "items.product",
+      });
+
+      return populatedCart;
     },
 
     login: async (

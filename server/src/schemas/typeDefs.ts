@@ -38,7 +38,9 @@ password: String!}
 type Query {
 customers: [Customer]!
 customer(customerID: ID!): Customer
-me: Customer}
+viewCart(cartId: ID!): Cart
+me: Customer
+}
 
 type Mutation {
 addCustomer(input: CustomerInput!): Auth

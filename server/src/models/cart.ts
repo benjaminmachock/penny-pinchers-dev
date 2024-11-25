@@ -12,13 +12,12 @@ interface CartItem extends Document {
 }
 
 const cartItemSchema = new Schema<CartItem>({
-  product: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
-  ],
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+
   quantity: { type: Number, required: true, min: 1 },
 });
 
@@ -36,6 +35,10 @@ const cartSchema = new Schema<Cart>(
     toObject: { getters: true },
   }
 );
+
+cartSchema.pre("findOne", function () {
+  this.populate("items.product");
+});
 
 const Cart = model<Cart>("Cart", cartSchema);
 

@@ -8,6 +8,25 @@ const resolvers = {
         customer: async (_parent, { customerId }) => {
             return await Customer.findOne({ _id: customerId });
         },
+        viewCart: async (_parent, { cartId }) => {
+            const cart = await Cart.findById(cartId);
+            const populatedCart = await cart?.populate({
+                path: "items.product",
+            });
+            console.log(populatedCart?.items);
+            return populatedCart;
+            // populatedCart?.items.forEach((item, index) => {
+            //   console.log(`Item ${index} product:`, item.product);
+            // });
+            // const normalizedItems = populatedCart?.items.map((item) => ({
+            //   ...item.toObject(), // Convert to plain JS object
+            //   product: Array.isArray(item.product)
+            //     ? item.product.map((p) => p.toObject()) // Handle array of populated objects
+            //     : item.product.toObject(), // Handle single populated object
+            // }));
+            // console.log("normalizedItems:", normalizedItems);
+            // return { ...populatedCart?.toObject(), items: normalizedItems };
+        },
         me: async (_parent, _args, context) => {
             if (context.user) {
                 return await Customer.findOne({ _id: context.user._id });
@@ -42,7 +61,8 @@ const resolvers = {
                 cart.items.push({ product: productId, quantity });
             }
             await cart.save();
-            return cart.populate("items.product");
+            const populatedCart = await cart.populate({ path: "items.product" });
+            return populatedCart;
         },
         login: async (_parent, { email, password }) => {
             const customer = await Customer.findOne({ email });
