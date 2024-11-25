@@ -39,7 +39,7 @@ customers: [Customer]!
 customer(customerID: ID!): Customer
 me: Customer
 products: [Product]!
-product(productID: ID!): Product
+product(productId: ID!): Product
  }
 
 type Mutation {

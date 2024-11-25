@@ -81,6 +81,9 @@ const resolvers = {
       _parent: unknown,
       { productId }: ProductArgs
     ): Promise<Product | null> => {
+      const product = await Product.findOne({ _id: productId });
+      console.log(productId);
+      console.log(product);
       return await Product.findOne({ _id: productId });
     },
   },

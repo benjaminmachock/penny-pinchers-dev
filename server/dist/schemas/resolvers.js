@@ -18,6 +18,9 @@ const resolvers = {
             return await Product.find();
         },
         product: async (_parent, { productId }) => {
+            const product = await Product.findOne({ _id: productId });
+            console.log(productId);
+            console.log(product);
             return await Product.findOne({ _id: productId });
         },
     },
