@@ -4,27 +4,21 @@ interface Cart extends Document {
   _id: string;
   customer: Types.ObjectId;
   items: CartItem[];
-  totalPrice: number;
-  paymentStatus: "processed" | "failed";
-  stripeSessionId?: string;
 }
 interface CartItem extends Document {
   _id: string;
   product: Types.ObjectId;
   quantity: number;
-  price: number;
 }
 
 const cartItemSchema = new Schema<CartItem>({
-  product: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Product",
-      required: true,
-    },
-  ],
-  quantity: { type: Number, required: true, default: 1 },
-  price: { type: Number, required: true },
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+
+  quantity: { type: Number, required: true, min: 1 },
 });
 
 const cartSchema = new Schema<Cart>(
@@ -35,22 +29,16 @@ const cartSchema = new Schema<Cart>(
       required: true,
     },
     items: [cartItemSchema],
-    totalPrice: {
-      type: Number,
-      required: true,
-      default: 0,
-    },
-    stripeSessionId: { type: String },
-    paymentStatus: {
-      type: String,
-      values: ["processed", "failed"],
-    },
   },
   {
     toJSON: { getters: true },
     toObject: { getters: true },
   }
 );
+
+cartSchema.pre("findOne", function () {
+  this.populate("items.product");
+});
 
 const Cart = model<Cart>("Cart", cartSchema);
 
