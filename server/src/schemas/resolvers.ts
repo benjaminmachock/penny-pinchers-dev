@@ -22,6 +22,30 @@ interface AddCustomerArgs {
 
 interface Context {
   user?: Customer;
+  product?: Product;
+}
+
+interface Product {
+  _id: string;
+  title: string;
+  price: string;
+  description: string;
+  category: string;
+  image: string;
+}
+
+interface ProductArgs {
+  productId: string;
+}
+
+interface AddProductArgs {
+  input: {
+    title: string;
+    price: string;
+    description: string;
+    category: string;
+    image: string;
+  };
 }
 
 const resolvers = {
@@ -58,6 +82,17 @@ const resolvers = {
 
       throw new AuthenticationError("Not Authenticated");
     },
+
+    products: async (): Promise<Product[]> => {
+      return await Product.find();
+    },
+
+    product: async (
+      _parent: unknown,
+      { productId }: ProductArgs
+    ): Promise<Product | null> => {
+      return await Product.findOne({ _id: productId });
+    },
   },
 
   Mutation: {
@@ -80,14 +115,12 @@ const resolvers = {
         quantity,
       }: { customerId: string; productId: string; quantity: number }
     ) => {
-      //find customer and push products to cart
       const customer = await Customer.findById(customerId);
       const product = await Product.findById(productId);
 
       if (!customer) throw new AuthenticationError("No User Found");
       if (!product) throw new AuthenticationError("No Product Found");
 
-      //find users cart
       let cart = await Cart.findOne({ user: customerId });
 
       if (!cart) {
@@ -186,6 +219,27 @@ const resolvers = {
       }
 
       throw new AuthenticationError("Could not find user");
+    },
+
+    addProduct: async (
+      _parent: unknown,
+      { input }: AddProductArgs
+    ): Promise<{ product: Product }> => {
+      const product = await Product.create({ ...input });
+
+      return { product };
+    },
+
+    removeProduct: async (
+      _parent: unknown,
+      _args: unknown,
+      context: Context
+    ): Promise<Product | null> => {
+      if (context.product) {
+        return await Product.findOneAndDelete({ _id: context.product._id });
+      }
+
+      throw new ProductError("Could not find product");
     },
   },
 };
