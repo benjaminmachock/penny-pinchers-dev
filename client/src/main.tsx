@@ -1,10 +1,17 @@
+import React from "react";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import App from "./App.tsx";
 import LoginPage from "./pages/loginPage.tsx";
-import ProductPage from "./pages/productPage";
 import ProductsPage from "./pages/productsPage";
+import ProductCardPage from "./pages/productCardPage.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
+
+const client = new ApolloClient({
+  uri: "http://localhost:3001/graphql",
+  cache: new InMemoryCache(),
+});
 
 const router = createBrowserRouter([
   {
@@ -16,12 +23,8 @@ const router = createBrowserRouter([
         element: <ProductsPage />,
       },
       {
-        path: "/product",
-        element: <ProductPage />,
-      },
-      {
-        path: "/product/:id",
-        element: <ProductPage />,
+        path: "/product/:productId",
+        element: <ProductCardPage />,
       },
       {
         path: "/login",
@@ -31,7 +34,14 @@ const router = createBrowserRouter([
   },
 ]);
 
-const rootElement = document.getElementById("root");
-if (rootElement) {
-  ReactDOM.createRoot(rootElement).render(<RouterProvider router={router} />);
-}
+const root = ReactDOM.createRoot(
+  document.getElementById("root") as HTMLElement
+);
+
+root.render(
+  <React.StrictMode>
+    <ApolloProvider client={client}>
+      <RouterProvider router={router} />
+    </ApolloProvider>
+  </React.StrictMode>
+);

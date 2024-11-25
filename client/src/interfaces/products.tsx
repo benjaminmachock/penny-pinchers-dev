@@ -1,10 +1,9 @@
 export interface Product {
-  id: number | null;
+  _id: string;
   title: string;
-  price: number | null;
-  description: string | null;
-  category: string | null;
-  image: string | null;
-  createdAt: Date | null;
-  updatedAt: Date | null;
+  description: string;
+  category: string;
+  image: string;
+  price: number;
+  updatedAt?: string;
 }
