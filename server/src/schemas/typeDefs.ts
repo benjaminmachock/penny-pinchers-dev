@@ -49,17 +49,15 @@ tilte: String
 price: String
 description: String
 category: String
-image: String
-}
- 
+image: String}
+
 type Query {
 customers: [Customer]!
 customer(customerID: ID!): Customer
 viewCart(cartId: ID!): Cart
 me: Customer
 products: [Product]!
-product(productID: ID!): Product
- }
+product(productID: ID!): Product}
 
 type Mutation {
 addCustomer(input: CustomerInput!): Auth
@@ -67,8 +65,7 @@ login(email: String!, password: String!): Auth
 addToCart(productId: ID!, customerId: ID!, quantity: Int!):Cart
 removeFromCart(productId: ID!, customerId: ID!, quantity: Int!):Cart
 removeCustomer: Customer
-removeProduct: Product
- }
+removeProduct: Product}
 `;
 
 export default typeDefs;
