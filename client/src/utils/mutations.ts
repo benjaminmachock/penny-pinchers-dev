@@ -8,6 +8,7 @@ export const ADD_CUSTOMER = gql`
         _id
         username
         email
+        password
       }
     }
   }
@@ -19,8 +20,8 @@ export const LOGIN_CUSTOMER = gql`
       token
       customer {
         _id
-        username
         email
+        password
       }
     }
   }
@@ -61,6 +62,28 @@ export const REMOVE_PRODUCT = gql`
       description
       category
       image
+    }
+  }
+`;
+
+export const ADD_REVIEW = gql`
+  mutation addReview($input: ReviewInput!) {
+    addReview(input: $input) {
+      review {
+        _id
+        reviewText
+        rating
+      }
+    }
+  }
+`;
+
+export const REMOVE_REVIEW = gql`
+  mutation removeReview($input: Review!) {
+    removeReview(review: $review) {
+      _id
+      reviewText
+      rating
     }
   }
 `;

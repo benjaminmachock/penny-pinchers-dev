@@ -46,3 +46,10 @@ export class ProductError extends GraphQLError {
     Object.defineProperty(this, "title", { value: "ProductError" });
   }
 }
+
+export class ReviewError extends GraphQLError {
+  constructor(message: string) {
+    super(message, undefined, undefined, undefined, ["Consult Dev Team"]);
+    Object.defineProperty(this, "title", { value: "ReviewError" });
+  }
+}

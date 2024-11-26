@@ -38,6 +38,7 @@ export const QUERY_PRODUCTS = gql`
       description
       category
       image
+      review
     }
   }
 `;
@@ -50,6 +51,28 @@ export const QUERY_SINGLE_PRODUCT = gql`
       description
       category
       image
+      review
+      rating
+    }
+  }
+`;
+
+export const QUERY_REVIEWS = gql`
+  query allReviews {
+    reviews {
+      _id
+      reviewText
+      rating
+    }
+  }
+`;
+
+export const QUERY_SINGLE_REVIEW = gql`
+  query singleReview($reviewId: ID!) {
+    review(reviewId: $reviewId) {
+      _id
+      reviewText
+      rating
     }
   }
 `;

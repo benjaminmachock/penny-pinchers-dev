@@ -1,19 +1,34 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 
-interface iCart extends Document {
+interface Cart extends Document {
   _id: string;
-  productId: string;
-  orderId: string;
+  customer: Types.ObjectId;
+  items: CartItem[];
+}
+interface CartItem extends Document {
+  _id: string;
+  product: Types.ObjectId;
+  quantity: number;
 }
 
-const cartSchema = new Schema<iCart>(
+const cartItemSchema = new Schema<CartItem>({
+  product: {
+    type: Schema.Types.ObjectId,
+    ref: "Product",
+    required: true,
+  },
+
+  quantity: { type: Number, required: true, min: 1 },
+});
+
+const cartSchema = new Schema<Cart>(
   {
-    productId: {
-      type: String,
+    customer: {
+      type: Schema.Types.ObjectId,
+      ref: "Customer",
+      required: true,
     },
-    orderId: {
-      type: String,
-    },
+    items: [cartItemSchema],
   },
   {
     toJSON: { getters: true },
@@ -21,6 +36,10 @@ const cartSchema = new Schema<iCart>(
   }
 );
 
-const Cart = model<iCart>("Cart", cartSchema);
+cartSchema.pre("findOne", function () {
+  this.populate("items.product");
+});
+
+const Cart = model<Cart>("Cart", cartSchema);
 
 export default Cart;

@@ -54,5 +54,40 @@
     "description": "Summer sausage with jalapeño and cheese for added flavor.",
     "category": "smoked",
     "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrjEv4zXtxwwNG10e5GwCxDZpHR-loDnVwoA&s"
+  },
+  {
+    "title": "Breakfast Sausage Links",
+    "price": 3.99,
+    "description": "Freshly made breakfast sausage links for a perfect start to your day.",
+    "category": "fresh",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjX3xrZ-vhnGKvv_UwXNOgo1NNzr-ulaw_uA&s"
+  },
+  {
+    "title": "Ground Italian Sausage (Mild or Hot)",
+    "price": 4.29,
+    "description": "Fresh ground Italian sausage available in mild or hot.",
+    "category": "fresh",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSk0uHHRkk7SAbunAayyW08mpkiyDUf0dO3Xg&s"
+  },
+  {
+    "title": "Chicken Sausage (Spinach and Feta)",
+    "price": 5.49,
+    "description": "Fresh chicken sausage with spinach and feta for a healthy option.",
+    "category": "fresh",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4KyPjnoxaGKRgwvH2JBU9Z1ZngyDvuQljeQ&s"
+  },
+  {
+    "title": "Bratwurst Sausage",
+    "price": 4.79,
+    "description": "Fresh bratwurst sausage perfect for grilling.",
+    "category": "fresh",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmQnifcggjv_tqb9KnA3_-OFI34GwdZyhjnw&s"
+  },
+  {
+    "title": "Turkey Breakfast Sausage Patties",
+    "price": 4.59,
+    "description": "Fresh turkey breakfast sausage patties for a lean breakfast option.",
+    "category": "fresh",
+    "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShxqgMR8CVApmRxpaWVbNtFvWacIfHYRy3BQ&s"
   }
 ]
