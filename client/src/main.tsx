@@ -56,13 +56,7 @@ import ProductCardPage from "./pages/productCardPage";
 import CartPage from "./pages/cartPage";
 import CheckoutPage from "./pages/checkouPage";
 import "bootstrap/dist/css/bootstrap.min.css";
-// import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { CartProvider } from "./components/cart/cartContext";
-
-// const client = new ApolloClient({
-//   uri: "http://localhost:3001/graphql",
-//   cache: new InMemoryCache(),
-// });
 
 const router = createBrowserRouter([
   {
@@ -99,10 +93,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    {/* <ApolloProvider client={client}> */}
     <CartProvider>
       <RouterProvider router={router} />
     </CartProvider>
-    {/* </ApolloProvider> */}
   </React.StrictMode>
 );
