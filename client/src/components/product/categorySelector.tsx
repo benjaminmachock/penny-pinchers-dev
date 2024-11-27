@@ -1,7 +1,7 @@
 import React from "react";
 import { Row, Col, Card, Button, Container } from "react-bootstrap";
 
-const styles = {
+const styles: { [key: string]: React.CSSProperties } = {
   container: {
     padding: "4rem 0",
   },
@@ -18,10 +18,10 @@ const styles = {
     border: "1px solid #e0e0e0",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
   },
-  cardHover: {
-    transform: "scale(1.05)",
-    boxShadow: "0 8px 15px rgba(0, 0, 0, 0.2)",
-  },
+  // cardHover: {
+  //   transform: "scale(1.05)",
+  //   boxShadow: "0 8px 15px rgba(0, 0, 0, 0.2)",
+  // },
   button: {
     backgroundColor: "#007bff",
     border: "none",
@@ -61,7 +61,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
       <Row className="mb-5 g-4">
         <Col md={6}>
           <Card
-            style={styles.card}
+            style={styles.card as React.CSSProperties}
             onMouseEnter={(e) =>
               ((
                 e.currentTarget as HTMLElement
@@ -86,7 +86,7 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
         </Col>
         <Col md={6}>
           <Card
-            style={styles.card}
+            style={styles.card as React.CSSProperties}
             onMouseEnter={(e) =>
               ((
                 e.currentTarget as HTMLElement

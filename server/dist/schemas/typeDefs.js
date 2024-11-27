@@ -88,5 +88,4 @@ removeReview: Review
 removeFromCart(productId: ID!, customerId: ID!, quantity: Int!):Cart
  }
 `;
-
 export default typeDefs;

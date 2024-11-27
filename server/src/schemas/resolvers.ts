@@ -108,13 +108,23 @@ const resolvers = {
     },
 
     products: async (): Promise<Product[]> => {
-      return await Product.find();
+      try {
+        const products = await Product.find();
+        return products;
+      } catch (err) {
+        console.log(err);
+
+        throw new Error("Could not find products");
+      }
     },
 
     product: async (
       _parent: unknown,
       { productId }: ProductArgs
     ): Promise<Product | null> => {
+      const product = await Product.findOne({ _id: productId });
+      console.log(productId);
+      console.log(product);
       return await Product.findOne({ _id: productId });
     },
 

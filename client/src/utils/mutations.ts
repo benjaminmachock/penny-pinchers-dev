@@ -8,7 +8,6 @@ export const ADD_CUSTOMER = gql`
         _id
         username
         email
-        password
       }
     }
   }
@@ -20,8 +19,8 @@ export const LOGIN_CUSTOMER = gql`
       token
       customer {
         _id
+        username
         email
-        password
       }
     }
   }
@@ -79,11 +78,13 @@ export const ADD_REVIEW = gql`
 `;
 
 export const REMOVE_REVIEW = gql`
-  mutation removeReview($input: Review!) {
-    removeReview(review: $review) {
-      _id
-      reviewText
-      rating
+  mutation removeReview($input: ReviewInput!) {
+    removeReview(input: $input) {
+      review {
+        _id
+        reviewText
+        rating
+      }
     }
   }
 `;
