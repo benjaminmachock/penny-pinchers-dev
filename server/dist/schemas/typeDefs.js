@@ -51,11 +51,17 @@ email: String!
 password: String!}
 
 input ProductInput {
-tilte: String
+title: String
 price: String
 description: String
 category: String
 image: String}
+
+
+input ReviewInput {
+reviewText: String
+rating: Float
+}
 
 type Query {
 customers: [Customer]!
@@ -63,7 +69,8 @@ customer(customerID: ID!): Customer
 viewCart(cartId: ID!): Cart
 me: Customer
 products: [Product]!
-product(productID: ID!): Product
+product(productId: ID!): Product
+
 reviews: [Review]!
 review(reviewID: ID!): Review
  }

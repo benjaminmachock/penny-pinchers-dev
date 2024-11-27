@@ -60,7 +60,6 @@ const ProductCardPage: React.FC = () => {
 
 export default ProductCardPage;
 
-// import React from "react";
 // import { useQuery } from "@apollo/client";
 // import { useParams } from "react-router-dom";
 // import { QUERY_SINGLE_PRODUCT } from "../utils/queries";

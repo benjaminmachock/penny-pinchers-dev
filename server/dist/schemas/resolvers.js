@@ -22,7 +22,14 @@ const resolvers = {
             throw new AuthenticationError("Not Authenticated");
         },
         products: async () => {
-            return await Product.find();
+            try {
+                const products = await Product.find();
+                return products;
+            }
+            catch (err) {
+                console.log(err);
+                throw new Error("Could not find products");
+            }
         },
         product: async (_parent, { productId }) => {
             const product = await Product.findOne({ _id: productId });

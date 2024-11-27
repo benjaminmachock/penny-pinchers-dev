@@ -18,10 +18,10 @@ const styles: { [key: string]: React.CSSProperties } = {
     border: "1px solid #e0e0e0",
     transition: "transform 0.3s ease, box-shadow 0.3s ease",
   },
-  cardHover: {
-    transform: "scale(1.05)",
-    boxShadow: "0 8px 15px rgba(0, 0, 0, 0.2)",
-  },
+  // cardHover: {
+  //   transform: "scale(1.05)",
+  //   boxShadow: "0 8px 15px rgba(0, 0, 0, 0.2)",
+  // },
   button: {
     backgroundColor: "#007bff",
     border: "none",

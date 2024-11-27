@@ -1,8 +1,7 @@
 import pennies from "../../assets/images/pennies.png";
 import { Nav, Navbar, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { FaShoppingCart } from "react-icons/fa"; // Import the cart icon
-
+import { FaShoppingCart } from "react-icons/fa";
 const Header = () => {
   return (
     <>
