@@ -1,13 +1,15 @@
 import React, { useState } from "react";
 import { Form, Button, Container, Row, Col } from "react-bootstrap";
 import AuthService from "../../utils/auth";
-import axios from "axios";
+import { useMutation } from "@apollo/client";
+import { LOGIN_CUSTOMER } from "../../utils/mutations";
 
 const Login: React.FC = () => {
   const [formState, setFormState] = useState({
     username: "",
     password: "",
   });
+  const [loginCustomer, { data }] = useMutation(LOGIN_CUSTOMER);
 
   const [error, setError] = useState<string | null>(null);
 
@@ -18,24 +20,31 @@ const Login: React.FC = () => {
       [name]: value,
     });
   };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      interface LoginResponse {
-        token: string;
-      }
+      // interface LoginResponse {
+      //   token: string;
+      // }
 
-      const response = await axios.post<LoginResponse>("/login", {
-        username: formState.username,
-        password: formState.password,
+      await loginCustomer({
+        variables: {
+          email: formState.username,
+          password: formState.password,
+        },
+      }).then(({ data }) => {
+        console.log(data.login);
+        if (data && data.login && data.login.token) {
+          AuthService.login(data.login.token);
+          const token = localStorage.getItem("id_token");
+          console.log(token);
+          console.log("Logged in successfully.");
+        } else {
+          setError("Invalid login response from server.");
+        }
       });
 
-      if (response.data && response.data.token) {
-        AuthService.login(response.data.token);
-      } else {
-        setError("Invalid login response from server.");
-      }
+      console.log(data);
     } catch (err) {
       console.error(err);
       setError("Failed to log in. Please check your credentials.");

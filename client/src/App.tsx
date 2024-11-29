@@ -1,6 +1,6 @@
 import { Container } from "react-bootstrap";
 import Header from "./components/header/header";
-import LoginHeader from "./components/header/loginHeader";
+// import LoginHeader from "./components/header/loginHeader";
 import Footer from "./components/footer/footer";
 import { Outlet } from "react-router-dom";
 import {
@@ -36,7 +36,7 @@ function App() {
       <>
         <div>
           <Header />
-          <LoginHeader />
+          {/* <LoginHeader /> */}
           <Container>
             <main>
               <Outlet />
