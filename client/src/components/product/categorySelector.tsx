@@ -62,16 +62,8 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
         <Col md={6}>
           <Card
             style={styles.card as React.CSSProperties}
-            onMouseEnter={(e) =>
-              ((
-                e.currentTarget as HTMLElement
-              ).style.cssText = `transform: ${styles.cardHover.transform}; box-shadow: ${styles.cardHover.boxShadow}`)
-            }
-            onMouseLeave={(e) =>
-              ((
-                e.currentTarget as HTMLElement
-              ).style.cssText = `box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transform: none`)
-            }
+            onMouseEnter={(e) => e.currentTarget as HTMLElement}
+            onMouseLeave={(e) => e.currentTarget as HTMLElement}
           >
             <div>
               <h2>SMOKED</h2>
@@ -87,16 +79,8 @@ const CategorySelector: React.FC<CategorySelectorProps> = ({
         <Col md={6}>
           <Card
             style={styles.card as React.CSSProperties}
-            onMouseEnter={(e) =>
-              ((
-                e.currentTarget as HTMLElement
-              ).style.cssText = `transform: ${styles.cardHover.transform}; box-shadow: ${styles.cardHover.boxShadow}`)
-            }
-            onMouseLeave={(e) =>
-              ((
-                e.currentTarget as HTMLElement
-              ).style.cssText = `box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); transform: none`)
-            }
+            onMouseEnter={(e) => e.currentTarget as HTMLElement}
+            onMouseLeave={(e) => e.currentTarget as HTMLElement}
           >
             <div>
               <h2>FRESH</h2>
