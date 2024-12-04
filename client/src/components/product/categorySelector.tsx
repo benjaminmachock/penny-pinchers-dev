@@ -51,7 +51,6 @@ const styles: { [key: string]: React.CSSProperties } = {
 interface CategorySelectorProps {
   setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>;
 }
-
 const CategorySelector: React.FC<CategorySelectorProps> = ({
   setSelectedCategory,
 }) => {

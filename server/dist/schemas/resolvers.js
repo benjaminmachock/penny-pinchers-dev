@@ -102,14 +102,19 @@ const resolvers = {
         },
         login: async (_parent, { email, password }) => {
             const customer = await Customer.findOne({ email });
+            // console.log(customer);
             if (!customer) {
                 throw AuthenticationError;
+                console.log("No customer found");
             }
             const correctPw = await customer.isCorrectPassword(password);
+            console.log(correctPw);
             if (!correctPw) {
                 throw new AuthenticationError("Not Authenticated");
+                console.log("Incorrect password");
             }
             const token = signToken(customer.username, customer.email, customer._id);
+            console.log(token);
             return { token, customer };
         },
         removeCustomer: async (_parent, _args, context) => {

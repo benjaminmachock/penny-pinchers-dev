@@ -48,7 +48,9 @@ customerSchema.pre<iCustomer>("save", async function (next) {
 customerSchema.methods.isCorrectPassword = async function (
   password: string
 ): Promise<boolean> {
-  return bcrypt.compare(password, this.password);
+  console.log(password, this.password);
+  return password === this.password;
+  //   return bcrypt.compare(password, this.password);
 };
 
 const Customer = model<iCustomer>("Customer", customerSchema);
